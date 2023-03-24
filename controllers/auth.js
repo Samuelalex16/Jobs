@@ -24,7 +24,10 @@ const login = async(req, res) => {
     if (!user) {
         throw new UnauthenticatedError('Invalid Credentials')
     }
-
+    const isPasswordCorrect = await user.comparePassword(password)
+    if (!isPasswordCorrect) {
+        throw new UnauthenticatedError('The email or the password is wrong')
+    }
     const token = await user.createJWT()
     res.status(StatusCodes.OK).json({ user: { name: user.name }, token })
 }
