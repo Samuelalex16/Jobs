@@ -1,12 +1,11 @@
 const User = require('../models/User')
+const Job = require('../models/Job')
 const jwt = require('jsonwebtoken')
 const { UnauthenticatedError } = require('../errors')
 
 
 const auth = (req, res, next) => {
-    const authHeader = req.Headers.authorization
-
-    console.log("here");
+    const authHeader = req.headers.authorization
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         throw new UnauthenticatedError("Authentication Invalid")
     }
